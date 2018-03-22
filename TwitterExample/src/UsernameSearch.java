@@ -43,35 +43,11 @@ public class UsernameSearch {
 
 	private String retrieveTweetsFromUsername(String username) {
 		String url = createRequestURLForUsername(username);
-		OAuthConsumer consumer = new CommonsHttpOAuthConsumer(Utils.ConsumerKey, Utils.ConsumerSecret);
-		consumer.setTokenWithSecret(Utils.AccessToken, Utils.AccessSecret);
-
-		HttpClient client = HttpClientBuilder.create().build();
-		HttpGet request = new HttpGet(url);
-		try {
-			consumer.sign(request);
-		} catch (OAuthMessageSignerException | OAuthExpectationFailedException | OAuthCommunicationException e1) {
-			e1.printStackTrace();
-		}
-
-		StringBuilder sb = new StringBuilder();
-		try {
-			HttpResponse response = client.execute(request);
-			BufferedReader rd = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
-			String line = "";
-			while ((line = rd.readLine()) != null) {
-				sb.append(line);
-			}
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		String response = sb.toString();
+		JSONObject response = Utils.buildAndSendRequest(url);
 
 		StringBuilder allTweets = new StringBuilder();
-
 		try {
-			JSONObject obj = new JSONObject(response);
-			JSONArray statuses = obj.getJSONArray("statuses");
+			JSONArray statuses = response.getJSONArray("statuses");
 			System.out.println("Number of tweets: " + statuses.length());
 			for (int x = 0; x < statuses.length(); x++) {
 				JSONObject tweet = (JSONObject) statuses.get(x);
