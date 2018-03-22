@@ -33,13 +33,15 @@ public class TwitterClass {
 	private static String ConsumerKey = "gMQMgbfwB7tIQ4ywoEDyp7CR9";
 	private static String ConsumerSecret = "TI10f56Awm7r8NVkSAdBHMoIWQFRJbXzQKQun6nYMLZkk2QWow";
 
+	private static String twitterUser = "realDonaldTrump";
+
 	public static void main(String[] args) {
 
-		String allTweetsText = retrieveTweetsFromUsername("BarackObama");
+		String allTweetsText = retrieveTweetsFromUsername(twitterUser);
 		ToneAnalysis result = analyzeText(allTweetsText);
 
 		DocumentAnalysis da = result.getDocumentTone();
-		System.out.println("\n\n Document score");
+		System.out.println("Sentiment score for @" + twitterUser);
 		List<ToneScore> toneScores = da.getTones();
 
 		for (ToneScore score : toneScores) {
@@ -94,13 +96,8 @@ public class TwitterClass {
 	private static ToneAnalysis analyzeText(String text) {
 		ToneAnalyzer service = new ToneAnalyzer("2017-09-21", "d74d1640-78d7-4c0b-ba88-ed16e9935e2d", "05icUbUbAXrJ");
 		ToneOptions toneOptions = new ToneOptions.Builder().html(text).addTone(ToneOptions.Tone.EMOTION).build();
-		System.out.println("Tones:");
-		for (String tone : toneOptions.tones()) {
-			System.out.println(tone);
-		}
+		
 		ToneAnalysis result = service.tone(toneOptions).execute();
-		System.out.println("\n\n Sentences score");
-
 		return result;
 	}
 
