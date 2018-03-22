@@ -33,11 +33,14 @@ public class TwitterClass {
 	private static String ConsumerKey = "gMQMgbfwB7tIQ4ywoEDyp7CR9";
 	private static String ConsumerSecret = "TI10f56Awm7r8NVkSAdBHMoIWQFRJbXzQKQun6nYMLZkk2QWow";
 
-	private static String twitterUser = "realDonaldTrump";
+	private static String twitterUser = "BarackObama";
 
 	public static void main(String[] args) {
 
 		String allTweetsText = retrieveTweetsFromUsername(twitterUser);
+		if(allTweetsText == null) {
+			return;
+		}
 		ToneAnalysis result = analyzeText(allTweetsText);
 
 		DocumentAnalysis da = result.getDocumentTone();
