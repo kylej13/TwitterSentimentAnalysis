@@ -35,8 +35,6 @@ public class TwitterClass {
 		
 		UsernameSearch trump = new UsernameSearch("realDonaldTrump");
 		trump.printToneScores();
-		
-		
 
 	}
 
