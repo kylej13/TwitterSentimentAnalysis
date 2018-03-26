@@ -25,8 +25,6 @@ public class GeoSearch {
 		DocumentAnalysis da = result.getDocumentTone();
 		List<ToneScore> toneScores = da.getTones();
 		this.toneScores = toneScores;
-
-		printToneScores();
 	}
 
 	private String searchTweetsByLocation() {
@@ -51,7 +49,7 @@ public class GeoSearch {
 
 	private String createURLForLocation() {
 		String url = "https://api.twitter.com/1.1/search/tweets.json?geocode=" + latitude + "," + longitude
-				+ ",1mi&count=100";
+				+ ",1mi&count=100&tweet_mode=extended";
 		return url;
 	}
 
