@@ -29,11 +29,12 @@ public class UsernameSearch {
 
 	private String retrieveTweetsFromUsername(String username) {
 		String url = createRequestURLForUsername(username);
-		JSONObject response = Utils.buildAndSendRequest(url);
+		JSONArray statuses = Utils.buildAndSendRequest(url);
 
 		StringBuilder allTweets = new StringBuilder();
 		try {
-			JSONArray statuses = response.getJSONArray("statuses");
+			//JSONArray statuses = new JSONArray(response);
+			//JSONArray statuses = response.getJSONArray("statuses");
 			System.out.println("Number of tweets: " + statuses.length());
 			for (int x = 0; x < statuses.length(); x++) {
 				JSONObject tweet = (JSONObject) statuses.get(x);
@@ -48,8 +49,9 @@ public class UsernameSearch {
 	}
 
 	private static String createRequestURLForUsername(String username) {
-		String urlString = "https://api.twitter.com/1.1/search/tweets.json?q=" + username
-				+ "&result_type=popular&tweet_mode=extended";
+		//String urlString = "https://api.twitter.com/1.1/search/tweets.json?q=" + username
+		//		+ "&result_type=popular&tweet_mode=extended";
+		String urlString = "https://api.twitter.com/1.1/statuses/user_timeline.json?screen_name=" + username + "&count=100&exclude_replies=true&include_rts=false&tweet_mode=extended";
 		return urlString;
 	}
 

@@ -9,8 +9,13 @@ public class TwitterClass {
 		// UsernameSearch trump = new UsernameSearch("realDonaldTrump");
 		// trump.printToneScores();
 
-		GeoSearch raleigh = new GeoSearch(35.7796, -78.6382);
-		raleigh.printToneScores();
+		UsernameSearch dakota = new UsernameSearch("realDonaldTrump");
+		//UsernameSearch jordan = new UsernameSearch("JordanRutledge");
+		
+		dakota.printToneScores();
+		//jordan.printToneScores();
+		//GeoSearch raleigh = new GeoSearch(35.7796, -78.6382);
+		//raleigh.printToneScores();
 	}
 
 }

@@ -67,4 +67,8 @@ public class GeoSearch {
 			System.out.println(score.getToneName() + ": " + score.getScore());
 		}
 	}
+
+	public List<ToneScore> getToneScores() {
+		return toneScores;
+	}
 }

@@ -7,8 +7,12 @@ import java.util.List;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
+import org.apache.http.client.config.CookieSpecs;
+import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.http.impl.client.HttpClients;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -35,11 +39,15 @@ public class Utils {
 		cityLocations.put("Raleigh", new LatLng(35.787743, -78.644257));
 	}
 
-	public static JSONObject buildAndSendRequest(String url) {
+	public static JSONArray buildAndSendRequest(String url) {
 		OAuthConsumer consumer = new CommonsHttpOAuthConsumer(Utils.ConsumerKey, Utils.ConsumerSecret);
 		consumer.setTokenWithSecret(Utils.AccessToken, Utils.AccessSecret);
 
-		HttpClient client = HttpClientBuilder.create().build();
+		//HttpClient client = HttpClientBuilder.create().build();
+		HttpClient client = HttpClients.custom()
+		        .setDefaultRequestConfig(RequestConfig.custom()
+		            .setCookieSpec(CookieSpecs.STANDARD).build())
+		        .build();
 		HttpGet request = new HttpGet(url);
 		try {
 			consumer.sign(request);
@@ -58,9 +66,9 @@ public class Utils {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		String response = sb.toString();
+		String response = sb.toString().trim();
 		try {
-			JSONObject responseJSON = new JSONObject(response);
+			JSONArray responseJSON = new JSONArray(response);
 			return responseJSON;
 		} catch (JSONException e) {
 			e.printStackTrace();
